@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<mbeans-descriptors>
+
+	<mbean name="SimpleValve" description="MyValve"
+		domain="Catalina" group="Valve" type="com.github.chanko.valve.SimpleValve">
+
+		<attribute name="requestURLsMap" description="List Value"
+			type="java.util.Map" />
+
+	</mbean>
+</mbeans-descriptors>
