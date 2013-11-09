@@ -5,4 +5,7 @@
 	<mbean code="com.github.chanko.mbean.Counter" name="com.github.chanko:service=Counter">
 	</mbean>
 
+	<mbean code="com.github.chanko.mbean.Stats" name="com.github.chanko:service=Stats">
+	</mbean>
+
 </server>
