@@ -1,0 +1,51 @@
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+		<meta charset="utf-8"/>
+		<title>Web Socket</title>
+		<script type="text/javascript">
+			var wsUri = "ws://localhost:8080/chanko-web/echo";
+			var output;
+
+			function send_message() {
+				var message = textID.value;
+				writeToScreen("Message Sent:" + message);
+				websocket.send(message);
+			}
+			
+			function writeToScreen(message) {
+				var pre = document.createElement("p");
+				pre.style.wordWrap = "break-word";
+				pre.innerHTML = message;
+
+				output.appendChild(pre);
+			}
+
+			window.addEventListener("load", function(){
+				output = document.getElementById("output");
+
+				websocket = new WebSocket(wsUri);
+				websocket.onopen = function(evt) {
+					writeToScreen("Connected to Endpoint!");
+				}
+
+				websocket.onmessage = function(evt) {
+					writeToScreen("Message Recieved:" + evt.data);
+				}
+
+				websocket.onerror = function(evt) {
+					writeToScreen('<span style="color:red;">ERROR:</span>' + evt.data);
+				}
+			}, false);
+		</script>
+	</head>
+	<body>
+		<h1>Echo Websocket</h1>
+		<hr/>
+		<form>
+			<input type="text" id="textID" name="message" value="Hello"/>
+			<button type="button" onclick="send_message()">Send</button>
+		</form>
+		<div id="output"></div>
+	</body>
+</html>
