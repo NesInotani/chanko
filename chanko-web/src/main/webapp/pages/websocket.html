@@ -5,39 +5,57 @@
 		<title>Web Socket</title>
 		<script type="text/javascript">
 			var wsUri = "ws://localhost:8080/chanko-web/echo";
-			var output;
+			var send;
+			var receive;
 
 			function send_message() {
 				var message = textID.value;
-				writeToScreen("Message Sent:" + message);
+				write(send, "Message Sent:" + message);
 				websocket.send(message);
 			}
 			
-			function writeToScreen(message) {
+			function write(section, message) {
 				var pre = document.createElement("p");
 				pre.style.wordWrap = "break-word";
 				pre.innerHTML = message;
 
-				output.appendChild(pre);
+				section.appendChild(pre);
 			}
 
 			window.addEventListener("load", function(){
-				output = document.getElementById("output");
+				send = document.getElementById("send");
+				receive = document.getElementById("receive");
 
 				websocket = new WebSocket(wsUri);
 				websocket.onopen = function(evt) {
-					writeToScreen("Connected to Endpoint!");
+					write(send, "Connected to Endpoint!");
+					write(receive, "&nbsp;")
 				}
 
 				websocket.onmessage = function(evt) {
-					writeToScreen("Message Recieved:" + evt.data);
+					write(receive, "Message Received:" + evt.data);
 				}
 
 				websocket.onerror = function(evt) {
-					writeToScreen('<span style="color:red;">ERROR:</span>' + evt.data);
+					write(send, '<span style="color:red;">ERROR:</span>' + evt.data);
+					write(receive, "&nbsp;")
 				}
 			}, false);
 		</script>
+		<style>
+			#send {
+				border: 1em;
+				width : 50%;
+				float : left;
+				background-color: #ffffee;
+			}
+			#receive {
+				border: 1em;
+				width : 50%;
+				float : left;
+				background-color: #ffeeff;
+			}
+		</style>
 	</head>
 	<body>
 		<h1>Echo Websocket</h1>
@@ -46,6 +64,7 @@
 			<input type="text" id="textID" name="message" value="Hello"/>
 			<button type="button" onclick="send_message()">Send</button>
 		</form>
-		<div id="output"></div>
+		<div id="send"></div>
+		<div id="receive"></div>
 	</body>
 </html>
