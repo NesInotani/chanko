@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:jsf="http://xmlns.jcp.org/jsf"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:h="http://xmlns.jcp.org/jsf/html">
+<head>
+<title>Console</title>
+</head>
+<body jsf:id="body">
+	<h1>List</h1>
+	<form jsf:id="console" jsf:prependId="false" method="post">
+		<input type="submit" id="list" value="list"
+			jsf:action="#{consoleController.list()}" />
+<!-- TODO: HTML5-friendly markup doesn't work. why?
+		<table id="todos">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>title</th>
+					<th>done</th>
+					<th>operation</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr jsfc="ui:repeat" var="todo" value="#{consoleController.todos}">
+					<td>#{todo.id}</td>
+					<td>#{todo.title}</td>
+					<td>#{todo.done}</td>
+					<td><input type="submit" jsf:id="hello" value="hello"
+						jsf:action="#{consoleController.hello()}" /></td>
+				</tr>
+			</tbody>
+		</table>
+ -->
+		<h:dataTable id="todos" value="#{consoleController.todos}" var="todo">
+			<h:column>
+				<f:facet name="header">ID</f:facet>
+				<h:outputText value="#{todo.id}" />
+				<f:facet name="header">title</f:facet>
+				<h:outputText value="#{todo.title}" />
+				<f:facet name="header">done</f:facet>
+				<h:outputText value="#{todo.done}" />
+				<f:facet name="header">operation</f:facet>
+				<h:commandButton type="submit" action="#{consoleController.remove}"
+					value="remove">
+					<f:param name="id" value="#{todo.id}" />
+				</h:commandButton>
+			</h:column>
+		</h:dataTable>
+	</form>
+</body>
+</html>
