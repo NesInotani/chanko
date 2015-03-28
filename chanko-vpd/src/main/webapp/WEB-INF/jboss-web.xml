@@ -1,0 +1,3 @@
+<jboss-web>
+	<context-root>/chanko-vpd</context-root>
+</jboss-web>
